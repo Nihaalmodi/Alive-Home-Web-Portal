@@ -1,0 +1,169 @@
+{% block content %}
+<button id="logout"><a href="/logout">Logout</a></button>
+<div class='dropdown'>
+	<button onclick="show_floors()" id='select'>Select floors</button>
+<div class="floors">
+	<button id='first' onclick="show_first()">First Floor</button><br>
+		<button class="first">NR221</button>
+		<button class="first">NR222</button>
+		<button class="first">NR223</button>
+		<button class="first">NR224</button>
+		<button class="first">NC221</button>
+		<button class="first">NC222</button>
+		<button class="first">NC223</button>
+		<button class="first">NC224</button>
+		<button class="first">NC225</button>
+		<br>
+	<button id='second' onclick="show_second()">Second Floor</button><br>
+		<button class="second">NR221</button>
+		<button class="second">NR222</button>
+		<button class="second">NR223</button>
+		<button class="second">NR224</button>
+		<button class="second">NC221</button>
+		<button class="second">NC222</button>
+		<button class="second">NC223</button>
+		<button class="second">NC224</button>
+		<button class="second">NC225</button>
+		<br>
+	<button id='third' onclick="show_third()">Third Floor</button><br>
+		<button class="third">NR221</button>
+		<button class="third">NR222</button>
+		<button class="third">NR223</button>
+		<button class="third">NR224</button>
+		<button class="third">NC221</button>
+		<button class="third">NC222</button>
+		<button class="third">NC223</button>
+		<button class="third">NC224</button>
+		<button class="third">NC225</button>
+	</div>
+</div>
+<style type="text/css">
+.first{
+	visibility: hidden;
+	color: white;
+	background-color: #4CAF50;
+}
+.second{
+	color: white;
+	background-color: #4CAF50;
+	visibility: hidden;
+}
+#logout{
+	color: white;
+	background-color: #4CAF50;
+
+}
+.third{
+	visibility: hidden;
+	color: white;
+	background-color: #4CAF50;
+}
+.floors{
+	visibility: hidden;
+
+}
+#select{
+	color: white;
+	background-color: #C71585;
+}
+#first,#second,#third{
+	color: white;
+	background-color: #7B68EE;
+
+}
+/*	button[name='select']{
+	    background-color: #4CAF50;
+	    border: none;
+	    color: white;
+	    padding: 2vh 2vw;
+	    text-align: center;
+	    text-decoration: none;
+	    font-size: 16px;
+	}
+
+		<li>NR221</li>
+		<li>NR222</li>
+		<li>NR223</li>
+		<li>NR224</li>
+		<li>NC221</li>
+		<li>NC222</li>
+		<li>NC223</li>
+		<li>NC224</li>
+		<li>NC225</li>
+		</ul>
+	Second Floor
+		<ul class="second_floor">
+		<li>NR321</li>
+		<li>NR322</li>
+		<li>NR323</li>
+		<li>NR324</li>
+		<li>NC321</li>
+		<li>NC322</li>
+		<li>NC323</li>
+		<li>NC324</li>
+		<li>NC325</li>
+		</ul>
+		Third Floor
+		<ul class="third_floor">
+		<li>NR421</li>
+		<li>NR422</li>
+		<li>NR423</li>
+		<li>NR424</li>
+		<li>NC421</li>
+		<li>NC422</li>
+		<li>NC423</li>
+		<li>NC424</li>
+		<li>NC425</li>
+		</ul>
+	
+	.floors{
+		margin-top: 4vh; 
+	}
+	.first_floor{
+		visibility: hidden;
+
+	}
+	.second_floor{
+		visibility: hidden;
+
+	}
+	.floor{
+		visibility: hidden;
+
+	}
+	button[name='logout']{
+		float: right;
+		background-color: #4CAF50;
+	    border: none;
+	    color: white;
+	    padding: 2vh 2vw;
+	    text-align: center;
+	    text-decoration: none;
+	    font-size: 16px;overflow-x: 
+	}
+*/
+</style>
+<script type="text/javascript">
+	function show_floors() {
+		$('.floors').css('visibility','visible')		
+		$('.first').css('visibility','hidden')
+		$('.second').css('visibility','hidden')
+		$('.third').css('visibility','hidden')
+	}
+	function show_first() {
+		$('.first').css('visibility','visible')
+		$('.second').css('visibility','hidden')
+		$('.third').css('visibility','hidden')
+	}
+	function show_second() {
+		$('.second').css('visibility','visible')
+		$('.first').css('visibility','hidden')
+		$('.third').css('visibility','hidden')
+	}
+	function show_third() {
+		$('.third').css('visibility','visible')
+		$('.second').css('visibility','hidden')
+		$('.first').css('visibility','hidden')
+	}
+</script>
+{% endblock %}

@@ -15,8 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from django.contrib import admin
+from django.contrib.auth import views
+from login.forms import LoginForm
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^class/', include('class.urls')),
+    url(r'',include('class.urls')),
+    url(r'^login/$', views.login, {'template_name': 'login/home.html', 'authentication_form': LoginForm}, name='login'),
+    url(r'^logout/$', views.logout, {'next_page': '/login'}),
+    
 ]
