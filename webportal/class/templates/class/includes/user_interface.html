@@ -1,0 +1,85 @@
+
+<button id="logout"><a href="/logout">Logout</a></button>
+<div class='dropdown' ng-app="app" ng-controller="appcontrol">
+	<button onclick="show_floors()" id='select'>Select floors</button><br>
+	<button id='first' onclick="show_first()">First Floor</button><br>
+		<div class="table">
+			<table>
+				<tr>
+				<td>{{ timetable }}</td>
+				</tr>
+			</table>
+		</div>
+	<div class='first'>
+		{% verbatim %}<button ng-repeat="x in room1">{{ x }}</button>{% endverbatim %}
+	</div>
+	<button id='second' onclick="show_second()">Second Floor</button><br>
+	<div class='second'>
+		{% verbatim %}<button ng-repeat="y in room2">{{ y }}</button>{% endverbatim %}
+	</div>
+	<button id='third' onclick="show_third()">Third Floor</button><br>
+	<div class='third'>
+		{% verbatim %}<button ng-repeat="z in room3">{{ z }}</button>{% endverbatim %}
+	</div>
+</div>
+
+<script>
+var app = angular.module("app", []);
+app.controller("appcontrol", appcontrol)
+function appcontrol($scope, $http) {
+    $scope.room1 = ['NR221','NR222','NR223','NR224','NC221','NC222','NC223','NC224'];
+    $scope.room2 = ['NR321','NR322','NR323','NR324','NC321','NC322','NC323','NC324'];
+    $scope.room3 = ['NR421','NR422','NR423','NR424','NC421','NC422','NC423','NC424'];
+};
+</script>
+
+<script type="text/javascript">
+	function show_floors() {
+			$('#first').css('visibility','visible'),
+			$('#second').css('visibility','visible'),
+			$('#third').css('visibility','visible')
+		}
+	function show_first() {
+		$('.first').css('visibility','visible')
+	}
+	function show_second() {
+		$('.second').css('visibility','visible')
+	}
+	function show_third() {
+		$('.third').css('visibility','visible')
+	}
+</script>
+
+<style type="text/css">
+.first{
+	visibility: hidden;
+}
+.second{
+	visibility: hidden;
+}
+.third{
+	visibility: hidden;
+}
+button{
+	color: white;
+	background-color: #C71585;
+}
+#logout{
+	color: white;
+	background-color: #C61585
+}
+#select{
+	color: white;
+	background-color: #C71225;
+}
+#first,#second,#third{
+	color: white;
+	background-color: #7B68EE;
+	visibility: hidden;
+
+}
+</style>
+
+
+
+

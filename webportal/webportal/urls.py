@@ -23,5 +23,4 @@ urlpatterns = [
     url(r'',include('class.urls')),
     url(r'^login/$', views.login, {'template_name': 'login/home.html', 'authentication_form': LoginForm}, name='login'),
     url(r'^logout/$', views.logout, {'next_page': '/login'}),
-    
 ]
