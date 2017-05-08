@@ -2,8 +2,7 @@
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
-Examples:
-Function views
+
     1. Add an import:  from my_app import views
     2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
 Class-based views
@@ -17,10 +16,11 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from django.contrib.auth import views
 from login.forms import LoginForm
-
+import classroom
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'',include('class.urls')),
+    url(r'',include('classroom.urls')),
+  #  url(r'room/ajax_call$', classroom.views.update),
     url(r'^login/$', views.login, {'template_name': 'login/home.html', 'authentication_form': LoginForm}, name='login'),
     url(r'^logout/$', views.logout, {'next_page': '/login'}),
 ]

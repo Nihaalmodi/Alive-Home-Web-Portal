@@ -1,0 +1,112 @@
+{% extends 'class/header.html' %}
+{% block content %}
+
+	<table class="table table-bordered">
+	<tr>
+	<th>Day\Time</th>
+	<th>8:00am-8:55am</th>
+	<th>9-10</th>
+	<th>10-11</th>
+	<th>11-12</th>
+	<th>12-1</th>
+	<th>2-3</th>
+	<th>3-4</th>
+	<th>4-5</th>
+	<th>5-6</th>
+	</tr>
+	<tr>
+		<td>Monday</td>{% for x in time_table %}{% if x.room|stringformat:"s" == rooms %}{% if x.day|stringformat:"s" == "Monday" %}
+		<td><button class="myBtn" id="{{x.id}}" onclick="dialog(this.id)">{{x.prof}}
+		{{x.subject}}
+		{{x.subject_number}}
+		</button></td>{% endif %}{% endif %}{% endfor %}
+	</tr>
+	<tr>
+		<td>Tuesday</td>{% for x in time_table %}{% if x.room|stringformat:"s" == rooms %}{% if x.day|stringformat:"s" == "Tuesday"  %}
+		<td><button class="myBtn" id="{{x.id}}" onclick="dialog(this.id)">{{x.prof}}
+		{{x.subject}}
+		{{x.subject_number}}
+		</button></td>{% endif %}{% endif %}{% endfor %}
+	</tr>
+	<tr>
+		<td>Wednesday</td>{% for x in time_table %}{% if x.room|stringformat:"s" == rooms %}{% if x.day|stringformat:"s" == "Wednesday"  %}
+		<td><button class="myBtn" id="{{x.id}}" onclick="dialog(this.id)">{{x.prof}}
+		{{x.subject}}
+		{{x.subject_number}}
+		</button></td>{% endif %}{% endif %}{% endfor %}
+	</tr>
+	<tr>
+		<td>Thursday</td>{% for x in time_table %}{% if x.room|stringformat:"s" == rooms %}{% if x.day|stringformat:"s" == "Thursday" %}
+		<td><button class="myBtn" id="{{x.id}}" onclick="dialog(this.id)">{{x.prof}}
+		{{x.subject}}
+		{{x.subject_number}}
+		</button></td>{% endif %}{% endif %}{% endfor %}
+	</tr>
+	<tr>
+		<td>Friday</td>{% for x in time_table %}{% if x.room|stringformat:"s" == rooms %}{% if x.day|stringformat:"s" == "Friday" %}
+		<td><button class="myBtn" id="{{x.id}}" onclick="dialog(this.id)">{{x.prof}}
+		{{x.subject}}
+		{{x.subject_number}}
+		</button></td>{% endif %}{% endif %}{% endfor %}
+	</tr>
+	</table>
+
+	<div class="modal">
+        <input type="text" placeholder="Enter room" id="name">
+		<input type="text" placeholder="Enter prof" id="prof">
+		<input type="text" placeholder="Enter subject" id="subject">
+		<input type="text" placeholder="Enter subject_number" id="subject_number">
+		<input type="button" onclick="submit()" value="Submit">
+		<input type="button" onclick="cancel()" value="Cancel">
+		</div>
+<script type="text/javascript">
+	var room_change='none';
+	function dialog(room_id){
+		$('.modal').css('display','block'),
+		room_change =room_id;
+	};
+	function cancel()
+	{
+		$('.modal').css('display','none')		
+	};
+
+	function call(){
+		$.ajax({
+		type: "POST",
+		async : true,
+		url: "/room/ajax_call",
+		contentType: "application/json",
+		dataType: "json",
+		data: {
+			name: $("#name").val(),
+			prof: $("#prof").val(),
+			subject: $("#subject").val(),
+			subject_number: $("#subject_number").val(),
+			id: parseInt(room_change)
+		},
+		success: function(response) {
+			console.log('sucess');
+		},
+		error: function(response) {
+			console.log('fail');
+			console.log(response)
+		}
+		});
+	};
+	function submit()
+	{
+		call();
+	}
+	
+	
+</script>
+<style type="text/css">
+.modal{
+ display: none;
+ position: fixed;
+ z-index: 1;
+ width: 100%;
+ height: 100%;
+}
+</style>
+{% endblock %}

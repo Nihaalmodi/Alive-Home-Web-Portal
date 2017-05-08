@@ -14,5 +14,4 @@ class Command(BaseCommand):
         		room = dictionary['room'],
         		time = dictionary['time']
         		)
-        print(obj)
         

@@ -1,0 +1,11 @@
+{% extends 'class/header.html' %}
+{% block content %}
+<button id="logout"><a href="/logout">Logout</a></button>
+<div class='dropdown'>
+<form action="{% url 'room' %}" method="POST">
+{% csrf_token %}
+	<input type="text" placeholder="Enter room" name="room" required/>
+	<input type="submit" name="submit">
+</form>
+</div>
+{% endblock %}
