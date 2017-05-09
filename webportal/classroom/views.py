@@ -20,16 +20,15 @@ def get_room(request):
 def update(request):
     
     if request.method == 'POST':
-        name = request.POST.get('name'),
+        room = request.POST.get('room'),
         prof = request.POST.get('prof'),
         subject = request.POST.get('subject')
         subject_number = request.POST.get('subject_number')
         id=request.POST.get('id')
-        print(id)
-        print(name)
-    p=timetable.objects.get(id=id),
-    p.name=new_assign
-    p.prof=new_assign
-    p.subject=new_assign
-    p.subject_number=new_assign
-    p.save()
+        p=timetable.objects.get(id=id)
+        p.prof=prof[0]
+        p.room=room[0]
+        p.subject=subject
+        p.subject_number=subject_number
+        p.save()
+        return HttpResponse("Success")

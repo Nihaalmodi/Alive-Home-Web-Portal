@@ -1,11 +1,77 @@
 {% extends 'class/header.html' %}
 {% block content %}
+<div class="box">
 <button id="logout"><a href="/logout">Logout</a></button>
 <div class='dropdown'>
 <form action="{% url 'room' %}" method="POST">
 {% csrf_token %}
-	<input type="text" placeholder="Enter room" name="room" required/>
+<p id="Room">Please Enter Room No.</p>
+	<input type="text" placeholder="Enter room" name="room" required/><br>
 	<input type="submit" name="submit">
 </form>
 </div>
+</div>
+<style type="text/css">
+	body{
+		background-color: #87bdd8;
+	}
+	.box{
+		background-color: white;
+		margin-top: 25vh;
+		margin-left: 33vw;
+		width: 30vw;
+		padding: 4vh 4vw; 
+		border-radius: 5%;
+		border: 3px solid ;
+	}
+	a{
+		color: white; 
+	}
+	a:hover{
+		text-decoration: none;
+		color: white;
+	}
+	#logout{
+		background-color: #034f84;
+		width: 10vw;
+		font-size:1.3vw;
+		padding: 1vh 0.6vw;
+		margin-left:15vw; 
+		margin-top: -20vh;
+		border-radius: 5%;
+	}
+	#logout:hover{
+		background-color: #023b64;
+		transition: 1s;
+	}
+	#Room{
+		margin-top: 3vh;
+		padding: 1vw;
+	}
+	input[type="submit"]{
+		background-color: #034f84;
+		color: white;
+		font-size: 1.3vw;
+		width: 17vw; 
+		padding: 1vh 0.6vw;
+		margin-top: 3vh;
+		margin-left:1.5vw; 
+		border-radius: 5%;
+	}
+	input[type="submit"]:hover{
+		background-color: #023b64;
+		transition: 1s;
+	}
+	p{
+		font-family: Lato;
+		font-size: 2vw;
+	}
+	input[type="text"]{
+		width: 18vw;
+		padding: 0.6vw;
+		border-radius: 6%;
+		border-style: groove;
+		margin-left: 1vw;
+	}
+</style>
 {% endblock %}

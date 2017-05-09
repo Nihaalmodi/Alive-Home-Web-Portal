@@ -1,60 +1,76 @@
 {% extends 'login/header.html' %}
 {% block content %}
+<div class="box">{% load staticfiles %}
+<h2 class="heading"><img src="{% static 'data/Alive_logo.png' %}"><span id="Alive">Alive</span> <span id="Home">Home</span></h2>
 {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
+<p id="error">Your username and password didn't match. Please try again.</p>
 {% endif %}
 
 {% if next %}
     {% if user.is_authenticated %}
     <p>Your account doesn't have access to this page. To proceed,
     please login with an account that has access.</p>
-    {% else %}
-    <p>Please login to see this page.</p>
     {% endif %}
 {% endif %}
-<h2>Login</h2>
-<form method="post" action="{% url 'login' %}">
+
+<form method="post" action="{% url 'login' %}" class='input_data'>
 {% csrf_token %}
-<p class="bs-component">
+<p>
 <table>
 <tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
+    <td id="username_label">{{ form.username.label_tag }}</td>
+    <td id="username">{{ form.username }}</td>
 </tr>
 <tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
+    <td id="password_label">{{ form.password.label_tag }}</td>
+    <td id="password">{{ form.password }}</td>
 </tr>
 </table>
 </p>
 <p class="bs-component">
-<input class="btn btn-success btn-sm" type="submit" value="login" class="login" /></
+<input type="submit" value="Login" class="btn btn-primary" /></
 </p>
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
-
+</div>
 <style type="text/css">
-	h2{
-		font-size: 3vw;
-		width: 21vw;
-		text-align: center;
+	img{
+		width: 5vw;
+		height: 10vh;
 	}
-	.login{
-		padding: 2vw;
-		border: 3px solid #f1f1f1;
-		width: 60vw;
+	.box{
+		background-color: white;
+		padding: 4vh 4vw;
+		width: 30vw;
+		border-radius: 5%;
+		border: 3px solid ;  
 	}
-	input{
-		width: 10vw;
-		margin-left: 2vw; 
-		border: 1px solid #ccc;
+	#Alive{
+		font-weight: bold;
+		color: #034f84;
+	}
+	#Home{
+		color: #80ced6;
+		font-weight: bold;
 	}
 	body{
-		margin-left: 20vw; 
+		margin-top: 20vh; 
+		margin-left: 32vw; 
+		background-color: #87bdd8;
 	}
-	td{
-		padding: 1vw;
+	#username{
+		padding: 1.5vw;
 	}
-	
+	#password{
+		padding: 1.5vw;
+	}
+	input[value="Login"]{
+		width:19.4vw;
+		margin-left: .7vw; 
+	}
+	#error{
+		font-family: Lato;
+		font-size: 1.2vw;
+	}
 </style>
 {% endblock %}

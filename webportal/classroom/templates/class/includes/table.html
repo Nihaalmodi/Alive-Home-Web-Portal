@@ -1,18 +1,18 @@
 {% extends 'class/header.html' %}
 {% block content %}
 
-	<table class="table table-bordered">
+	<table class="table">
 	<tr>
 	<th>Day\Time</th>
 	<th>8:00am-8:55am</th>
-	<th>9-10</th>
-	<th>10-11</th>
-	<th>11-12</th>
-	<th>12-1</th>
-	<th>2-3</th>
-	<th>3-4</th>
-	<th>4-5</th>
-	<th>5-6</th>
+	<th>9:00am-9:55am</th>
+	<th>10:00am-10:55am</th>
+	<th>11:00am-11:55am</th>
+	<th>12:00pm-12:55pm</th>
+	<th>2:00pm-2:55pm</th>
+	<th>3:00pm-3:55pm</th>
+	<th>4:00pm-4:55pm</th>
+	<th>5:00pm-5:55pm</th>
 	</tr>
 	<tr>
 		<td>Monday</td>{% for x in time_table %}{% if x.room|stringformat:"s" == rooms %}{% if x.day|stringformat:"s" == "Monday" %}
@@ -50,15 +50,16 @@
 		</button></td>{% endif %}{% endif %}{% endfor %}
 	</tr>
 	</table>
-
+	<div class="modal-content">
 	<div class="modal">
-        <input type="text" placeholder="Enter room" id="name">
+        <input type="text" placeholder="Enter room" id="room" value={{rooms}}>
 		<input type="text" placeholder="Enter prof" id="prof">
 		<input type="text" placeholder="Enter subject" id="subject">
-		<input type="text" placeholder="Enter subject_number" id="subject_number">
-		<input type="button" onclick="submit()" value="Submit">
+		<input type="text" placeholder="Enter subject number" id="subject_number">
+		<input type="button" onclick="call()" value="Submit">
 		<input type="button" onclick="cancel()" value="Cancel">
 		</div>
+	</div>
 <script type="text/javascript">
 	var room_change='none';
 	function dialog(room_id){
@@ -74,39 +75,68 @@
 		$.ajax({
 		type: "POST",
 		async : true,
-		url: "/room/ajax_call",
-		contentType: "application/json",
+		url: "/room/ajax_call/",
+		contentType: "application/x-www-form-urlencoded",
 		dataType: "json",
 		data: {
-			name: $("#name").val(),
+			room: $("#room").val(),
 			prof: $("#prof").val(),
 			subject: $("#subject").val(),
 			subject_number: $("#subject_number").val(),
 			id: parseInt(room_change)
 		},
 		success: function(response) {
-			console.log('sucess');
+			console.log('success');
+			alert("Data Update Successfully!!!!");  
 		},
 		error: function(response) {
-			console.log('fail');
-			console.log(response)
+			console.log("fail")
 		}
 		});
+		location.reload();
 	};
-	function submit()
-	{
-		call();
-	}
-	
-	
 </script>
 <style type="text/css">
-.modal{
- display: none;
- position: fixed;
- z-index: 1;
- width: 100%;
- height: 100%;
+body{
+	background-color: #b4dffd;
+	padding: 1vw;
+}
+table{
+	padding: 2vh 2vw;
+	border: 2px solid
+}
+td,th{
+	text-decoration: center;
+	border: 2px solid;
+}
+input[type="text"]{
+	padding: 1vw;
+	border-radius:5%;
+}
+input[type="button"]{
+	padding: 1vw;
+	color: white;
+	background-color: #034f84;
+}
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1;
+    width: 100%; 
+    height: 100%;
+    overflow: auto;
+    margin-top: 90vh;
+    margin-left: 10vw;
+}
+
+.myBtn{
+	color: white;
+	background-color:#034f84;
+	width: 8vw;
+	height: 7vw;
+}
+.myBtn:hover{
+	box-shadow: 5%;
 }
 </style>
 {% endblock %}

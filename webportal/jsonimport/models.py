@@ -6,8 +6,8 @@ class timetable(models.Model):
 	day = models.CharField(max_length=10)
 	prof = models.CharField(max_length = 20, blank=True)
 	subject = models.CharField(max_length = 20, blank=True)
-	subject_number = models.CharField(max_length=10,validators =[RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')])
-	room = models.CharField(max_length = 5,validators=[RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')])
+	subject_number = models.CharField(max_length=10, blank=True, validators =[RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')])
+	room = models.CharField(max_length = 5, blank=True, validators=[RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')])
 	TIME_CHOICES=(
 		('8am-8:55am','8am-8:55am'),
 		('9am-9:55am','9am-9:55am'),
