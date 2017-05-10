@@ -1,6 +1,6 @@
 {% extends 'class/header.html' %}
 {% block content %}
-
+	<button id="go_btn"><a href="/" id="go">Go back</a></button>
 	<table class="table">
 	<tr>
 	<th>Day\Time</th>
@@ -16,61 +16,132 @@
 	</tr>
 	<tr>
 		<td>Monday</td>{% for x in time_table %}{% if x.room|stringformat:"s" == rooms %}{% if x.day|stringformat:"s" == "Monday" %}
-		<td><button class="myBtn" id="{{x.id}}" onclick="dialog(this.id)">{{x.prof}}
-		{{x.subject}}
+		<td><button class="myBtn" id="{{x.id}}" onclick="dialog(this.id)">{{x.prof}}<br>
+		{{x.subject}}<br>
 		{{x.subject_number}}
 		</button></td>{% endif %}{% endif %}{% endfor %}
 	</tr>
 	<tr>
 		<td>Tuesday</td>{% for x in time_table %}{% if x.room|stringformat:"s" == rooms %}{% if x.day|stringformat:"s" == "Tuesday"  %}
-		<td><button class="myBtn" id="{{x.id}}" onclick="dialog(this.id)">{{x.prof}}
-		{{x.subject}}
+		<td><button class="myBtn" id="{{x.id}}" onclick="dialog(this.id)">{{x.prof}}<br>
+		{{x.subject}}<br>
 		{{x.subject_number}}
 		</button></td>{% endif %}{% endif %}{% endfor %}
 	</tr>
 	<tr>
 		<td>Wednesday</td>{% for x in time_table %}{% if x.room|stringformat:"s" == rooms %}{% if x.day|stringformat:"s" == "Wednesday"  %}
-		<td><button class="myBtn" id="{{x.id}}" onclick="dialog(this.id)">{{x.prof}}
-		{{x.subject}}
-		{{x.subject_number}}
+		<td><button class="myBtn" id="{{x.id}}" onclick="dialog(this.id)">{{x.prof}}<br>
+		{{x.subject}}<br>
+		{{x.subject_number}}<br>
 		</button></td>{% endif %}{% endif %}{% endfor %}
 	</tr>
 	<tr>
 		<td>Thursday</td>{% for x in time_table %}{% if x.room|stringformat:"s" == rooms %}{% if x.day|stringformat:"s" == "Thursday" %}
-		<td><button class="myBtn" id="{{x.id}}" onclick="dialog(this.id)">{{x.prof}}
-		{{x.subject}}
-		{{x.subject_number}}
+		<td><button class="myBtn" id="{{x.id}}" onclick="dialog(this.id)">{{x.prof}}<br>
+		{{x.subject}}<br>
+		{{x.subject_number}}<br>
 		</button></td>{% endif %}{% endif %}{% endfor %}
 	</tr>
 	<tr>
 		<td>Friday</td>{% for x in time_table %}{% if x.room|stringformat:"s" == rooms %}{% if x.day|stringformat:"s" == "Friday" %}
-		<td><button class="myBtn" id="{{x.id}}" onclick="dialog(this.id)">{{x.prof}}
-		{{x.subject}}
-		{{x.subject_number}}
+		<td><button class="myBtn" id="{{x.id}}" onclick="dialog(this.id)">{{x.prof}}<br>
+		{{x.subject}}<br>
+		{{x.subject_number}}<br>
 		</button></td>{% endif %}{% endif %}{% endfor %}
 	</tr>
 	</table>
 	<div class="modal-content">
 	<div class="modal">
         <input type="text" placeholder="Enter room" id="room" value={{rooms}}>
-		<input type="text" placeholder="Enter prof" id="prof">
-		<input type="text" placeholder="Enter subject" id="subject">
-		<input type="text" placeholder="Enter subject number" id="subject_number">
-		<input type="button" onclick="call()" value="Submit">
-		<input type="button" onclick="cancel()" value="Cancel">
+		<input type="text" placeholder="Enter prof" list='list3' id="prof">
+		<datalist id="list3">
+		  {% for y in prof_subject %}
+		  <option>{{y.prof}}</option>{% endfor %}
+		</datalist>
+		<input type="text" placeholder="Enter subject" list="list1" id="subject">
+		<datalist id="list1">
+		  {% for y in prof_subject %}
+		  <option>{{y.subject_teaching}}</option>{% endfor %}
+		</datalist>
+		<input type="text" placeholder="Enter subject number" list='list2'id="subject_number">
+		<datalist id="list2">
+		  {% for y in prof_subject %}
+		  <option>{{y.subject_number}}</option>{% endfor %}
+		</datalist>
+		<input type="button" onclick="submit()" value="Submit">
+		<input type="button" onclick="cancel_lect()" value="Cancel lecture">
+		<input type="button" onclick="clear_data()" value="Clear data">
+		<input type="button" onclick="cancel()" value="Close">
 		</div>
 	</div>
 <script type="text/javascript">
 	var room_change='none';
 	function dialog(room_id){
-		$('.modal').css('display','block'),
+		$('.modal').css('display','block');
+		var content = $("#"+room_change).text();
+		var tmp =content.split('\n');
+		tmp[1] = $.trim(tmp[1]);
+		tmp[2] = $.trim(tmp[2]);
+		$("#prof").val(tmp[0])
+		$("#subject").val(tmp[1])
+		$("#subject_number").val(tmp[2])
+		$('#'+room_change).css('background-color','white');
 		room_change =room_id;
+		$('#'+room_change).css('background-color','#80ced6')
 	};
+	function clear_data(){
+		$("#prof").val('')
+		$("#subject").val('')
+		$("#subject_number").val('')
+	}
 	function cancel()
 	{
-		$('.modal').css('display','none')		
+		$('.modal').css('display','none')
+		$('#'+room_change).css('background-color','white')	
 	};
-
+	function change()
+	{
+		var a = $("#prof").val();
+		var b = $("#subject").val();
+		var c = $("#subject_number").val();
+		var d = a+'\n'+b+'\n'+c;
+		$('#'+room_change).text(d);
+	};
+	function submit(){
+		call();
+		if(confirm("Do you want to send e-mails to all students about change in schedule?")==true){
+			send_mail();}
+	}
+	function cancel_lect(){
+		$("#prof").val('')
+		$("#subject").val('')
+		$("#subject_number").val('')
+		call();
+		if(confirm("Do you want to send e-mails to all students that class has been cancelled?")==true){
+			send_mail();}
+	}
+	function send_mail(){
+		$.ajax({
+		type: "POST",
+		async : true,
+		url: "/room/mail_change/",
+		contentType: "application/x-www-form-urlencoded",
+		dataType: "json",
+		data: {
+			room: $("#room").val(),
+			prof: $("#prof").val(),
+			subject: $("#subject").val(),
+			subject_number: $("#subject_number").val(),
+			id: parseInt(room_change)
+		},
+		success: function(response) {
+			console.log('Success');
+		},
+		error: function(response) {
+			console.log("success");
+		}
+		});
+	}
 	function call(){
 		$.ajax({
 		type: "POST",
@@ -87,19 +158,30 @@
 		},
 		success: function(response) {
 			console.log('success');
-			alert("Data Update Successfully!!!!");  
 		},
 		error: function(response) {
-			console.log("fail")
+			console.log("Success")
 		}
 		});
-		location.reload();
+		change();
+		cancel();
 	};
 </script>
 <style type="text/css">
+#go{
+	color: white;
+}
+#go:hover{
+	text-decoration: none;
+}
+#go_btn{
+	background-color: #428bca;
+}
+#go_btn:hover{
+	background-color: #2c6da5;
+}
 body{
 	background-color: #b4dffd;
-	padding: 1vw;
 }
 table{
 	padding: 2vh 2vw;
@@ -108,6 +190,7 @@ table{
 td,th{
 	text-decoration: center;
 	border: 2px solid;
+	background-color: white;
 }
 input[type="text"]{
 	padding: 1vw;
@@ -116,7 +199,10 @@ input[type="text"]{
 input[type="button"]{
 	padding: 1vw;
 	color: white;
-	background-color: #034f84;
+	background-color: #428bca;
+}
+input[type="button"]:hover{
+	background-color:#2c6da5;
 }
 .modal {
     display: none; 
@@ -125,18 +211,35 @@ input[type="button"]{
     width: 100%; 
     height: 100%;
     overflow: auto;
-    margin-top: 90vh;
-    margin-left: 10vw;
+    margin-top: 75vh;
+	background-color: rgb(0,0,0); 
+	background-color: rgba(0,0,0,0.4);
+    padding: 4vw;
+    width: 100vw;
+    -webkit-animation-name: fadeIn; /* Fade in the background */
+    -webkit-animation-duration: 0.5s;
+    animation-name: fadeIn;
+    animation-duration: 0.5s;
+}
+@-webkit-keyframes fadeIn {
+    from {opacity: 0} 
+    to {opacity: 1}
 }
 
+@keyframes fadeIn {
+    from {opacity: 0} 
+    to {opacity: 1}
+}
 .myBtn{
-	color: white;
-	background-color:#034f84;
+	color: black;
+	border:none;
+	background-color:white;
 	width: 8vw;
 	height: 7vw;
 }
 .myBtn:hover{
 	box-shadow: 5%;
+	font-weight: bold;
 }
 </style>
 {% endblock %}

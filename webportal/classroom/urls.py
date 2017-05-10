@@ -19,6 +19,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^room/$', views.get_room, name='room'),
-    url(r'^room/ajax_call/$', views.update)
+    url(r'^room/ajax_call/$', views.update),
+    url(r'^room/mail_change/$', views.send_emails)
 
 ]
