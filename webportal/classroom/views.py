@@ -7,6 +7,7 @@ from .models import prof_subject, students_registered
 from .forms import RoomForm
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
+
 @login_required(login_url="/login")
 def index(request):
     return render(request, 'class/home.html',{'valid': ' '})
@@ -57,6 +58,6 @@ def send_emails(request):
         else:
             message=subject+'('+subject_number+')'+'Class has been reschedules to'
         from_email='nihaalmodi53@gmial.com'
-        send_mail(subject, message, from_email, mail_list, fail_silently=False,)
+        send_mail(subject, message, from_email, mail_list)
         return HttpResponse("Success")
 
