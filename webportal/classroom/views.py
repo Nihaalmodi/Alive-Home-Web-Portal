@@ -7,6 +7,7 @@ from .models import prof_subject, students_registered
 from .forms import RoomForm
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
+import smtplib
 
 @login_required(login_url="/login")
 def index(request):
@@ -52,12 +53,20 @@ def send_emails(request):
         mail_list=[]
         for x in range(0,p.count()):
             mail_list.append(p[x].email)
-        subject='Change in time table'
+        mail_subject='Change in time table'
         if(prof==''):
             message=subject+'('+subject_number+')'+"class has been cancelled which was on"+p.time
         else:
             message=subject+'('+subject_number+')'+'Class has been reschedules to'
-        from_email='nihaalmodi53@gmial.com'
-        send_mail(subject, message, from_email, mail_list)
-        return HttpResponse("Success")
-
+        gmail_user = 'nihaalmodi53@gmail.com'
+        gmail_pwd = ''
+        smtpserver = smtplib.SMTP("smtp.gmail.com",587)
+        smtpserver.ehlo()
+        smtpserver.starttls()
+        smtpserver.ehlo
+        smtpserver.login(gmail_user, gmail_pwd)
+        for x in range(0,p.count()):
+            smtpserver.sendmail(gmail_user, mail_list[x], message)
+        print ('done!')
+        smtpserver.close()
+        return HttpResponse("Sucess")
